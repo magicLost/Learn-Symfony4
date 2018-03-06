@@ -1,0 +1,114 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+#wrapper{
+    //width: 600px;
+    margin: 1% auto;
+}
+body, #wrapper{
+    height:94%;
+    background-color: rgba(0, 0, 0, 0);
+}
+html{
+    color: rgb(225, 223, 177);
+    font-family: "MV Boli";
+    height: 100%;
+    background:  url('../images/back.jpg') no-repeat top fixed black;
+}
+
+h1{
+    text-align: center;
+}
+
+
+
+/* Nav */
+
+div#nav{
+    width: 50px;
+    height: 50px;
+    float:right;
+    margin-right: -53px;
+    background-color: rgba(249, 255, 253, 0);
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+}
+
+div#nav a{
+    text-decoration: none;
+    color: rgb(225, 223, 177);
+    font-family: "MV Boli";
+}
+
+/* end Nav */
+
+/*Icon*/
+
+div#favicon{
+    width: 50px;
+    height: 50px;
+    float:left;
+    margin-left: -53px;
+    background-color: rgba(249, 255, 253, 0);
+    //box-shadow : 0 0 10px rgba(241, 255, 244, 0.5);
+}
+div#favicon a img{
+    width: 100%;
+    height: 100%;
+}
+
+
+/*end Icon*/
+/*Main divs*/
+#main{
+    color: rgb(225, 223, 177);
+    min-height: 100%;
+    margin-bottom: -50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow : 0 0 10px rgba(225, 223, 177, 0.4);
+}
+/*end Main divs*/
+
+/*divs in spinColor div*/
+
+body div#desc a{
+    text-decoration: none;
+    color: rgb(225, 223, 177);
+}
+
+body div#desc h3 {
+    font-family: "MV Boli";
+    color: rgb(225, 223, 177);
+    text-shadow: 1px 1px 2px black;
+    padding-top: 5%;
+    padding-bottom: 1%;
+    text-align: center;
+}
+
+
+/*End divs in spinColor div*/
+
+/* Best Score  */
+
+div#tableBestScore{
+    font-size: 1.2em;
+    width: 80%;
+    margin: auto;
+    padding-top: 30px;
+    //background-color: #d3fff3;
+}
+
+div#tableBestScore table{
+    margin: auto;
+}
+
+div#tableBestScore table td{
+    //border-right: 1px solid blanchedalmond;
+    //border-left: 1px solid blanchedalmond;
+    text-align: center;
+    padding: 10px;
+}
+
+/* End Best Score  */

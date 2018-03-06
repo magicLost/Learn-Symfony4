@@ -1,12 +1,39 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<!doctype html>
+<html lang="en">
+<head>
+    <title>{% block title %}Welcome to my site{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block stylesheets %}
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    {% endblock %}
+</head>
+<body>
+<div id="wrapper">
+    <div id="favicon">
+        <a href="{{ path('home') }}"><img src="{{ asset('images/icon_yellow.png') }}" alt="Icon"></a>
+    </div>
+
+    <div id="nav" >
+        <a title="Best score table" href="#">B</a>
+        <a title="Contact us" href="#">C</a>
+    </div>
+
+    <div id="main">{% block main %}{% endblock %}</div>
+</div>
+
+<footer class="footer">
+    <div class="container text-center">
+        <span class="text-muted">Made with <i class="fa fa-heart" style="color: red;"></i> by the guys and gals at <a href="https://knpuniversity.com">KnpUniversity</a></span>
+    </div>
+</footer>
+{% block javascripts %}
+    <script src="{{ asset('js/lib/jquery-3.1.0.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}
+</body>
 </html>
