@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Opps... We have an error.' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <p>Status code = {{ status_code }}</p>
+
+    <p>Status text = {{ status_text }}</p>
+
+{% endblock main %}

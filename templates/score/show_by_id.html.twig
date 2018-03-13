@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <h3>{{ score.name }}</h3>
+
+    <p>Счет = {{ score.score }}</p>
+    <p>Дата = {{ score.date | date('Y-m-d H:i:s') }}</p>
+
+{% endblock main %}

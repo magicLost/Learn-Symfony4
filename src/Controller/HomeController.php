@@ -15,6 +15,7 @@ class HomeController extends AbstractController
     public function home(MarkdownHelper $markdownHelper)
     {
 
+
         $articleContent = <<<EOL
 
 «Дело в том, что скорость **технологических изменений** нарастает **стремительно**, идет резко вверх. Тот, кто использует эту технологическую волну, вырвется далеко вперед. Тех, кто не сможет этого сделать, она, эта волна, просто захлестнет, утопит. Технологическое отставание, зависимость означают снижение безопасности и экономических возможностей страны. А в результате — потерю суверенитета. Именно так, а не иначе обстоит дело <...>.
@@ -33,4 +34,46 @@ EOL;
             'article' => $articleContent
         ]);
     }
+}
+
+trait LoggerTrait
+{
+    /**
+     * @var LoggerInterface|null
+     */
+    private $logger;
+    /**
+     * @required
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    private function logInfo(string $message, array $context = [])
+    {
+        if ($this->logger) {
+            $this->logger->info($message, $context);
+        }
+    }
+}
+
+class SlackClient
+{
+
+    use LoggerTrait;
+
+    public function __construct()
+    {
+        //..
+    }
+
+    public function sendMessage(string $from, string $message)
+    {
+        $this->logInfo('Beaming a message to Slack!', [
+            'message' => $message
+        ]);
+        //...
+    }
+
 }

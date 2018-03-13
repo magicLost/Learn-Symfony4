@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        table{
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        thead, tbody{
+            display: block;
+            width: 100%;
+        }
+        tr{
+
+            display: block;
+            width: 100%;
+        }
+        td, th{
+            background-color: rgba(211, 216, 188, 0.09);
+            display: block;
+            width: 25%;
+            float:left;
+            padding: 5px;
+            //border: 1px solid #cdc894;
+        }
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+         {% set i = 0 %}
+
+         {% for score in scores %}
+            <tr>
+                {% set i = i + 1 %}
+                <td>{{ i }}</td>
+                <td><a href="{{ path('score_show_by_id', {'id': score.id}) }}">{{ score.name }}</a></td>
+                <td>{{ score.score }}</td>
+                {#score.date DateTime class#}
+                <td>{{ score.date|date('Y-m-d') }}</td>
+            </tr>
+         {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock main %}

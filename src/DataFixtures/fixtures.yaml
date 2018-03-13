@@ -1,0 +1,13 @@
+App\Entity\Score:
+  score_{1..15}:
+    name: <firstName()>
+    real_name: <name()>
+    score: <numberBetween(100, 5600)>
+    isActive: <boolean(80)>
+
+App\Entity\ScoreComment:
+  score.comment_{1..40}:
+    name: <userName()>
+    comment: <paragraph()>
+    createdAt: <dateTimeBetween('-6 months', 'now')>
+    score: '@score_*'
