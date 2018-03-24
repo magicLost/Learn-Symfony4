@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        button.category_button{
+            width: 30%;
+            display: block;
+            margin: 10px auto;
+            padding: 30px;
+            background-color: #000000;
+            border: none;
+            color: bisque;
+        }
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <div id="categories">
+
+        {% for category in categories %}
+
+            <button class="category_button">{{ category.name }} | {{ category.fortuneCookies|length }}</button>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock main %}

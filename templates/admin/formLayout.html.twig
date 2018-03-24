@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery_ui/jquery-ui.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery_ui/jquery-ui.theme.min.css') }}" />
+
+    <style type="text/css">
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/lib/jquery-ui.js') }}"></script>
+
+    <script type="text/javascript">
+
+        $('.js-datepicker').datepicker({
+            dateFormat: "yy-MM-dd"
+        });
+
+    </script>
+
+{% endblock javascripts %}

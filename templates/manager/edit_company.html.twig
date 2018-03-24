@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                {{ form_start(companyForm) }}
+
+                {{ form_row(companyForm.name) }}
+                {{ form_row(companyForm.foundedAt) }}
+                {{ form_row(companyForm.usersWorkingIn) }}
+
+                <button type="submit" class="btn btn-primary">Edit</button>
+
+
+                {{ form_end(companyForm) }}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock main %}

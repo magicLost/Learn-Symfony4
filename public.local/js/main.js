@@ -3,7 +3,7 @@ $(function(){
     var winWidth = $(window).width();
     var widthWrapper = ( winWidth * 0.7 < 400) ? 400 : winWidth * 0.7 ;
 
-    console.log(winWidth);
+    //console.log(winWidth);
 
     $('div#wrapper').css({
         'width': widthWrapper

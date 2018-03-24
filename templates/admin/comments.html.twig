@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        h3{
+            text-align: center;
+        }
+        ul li{
+            text-align: center;
+            list-style-type: none;
+            padding: 5px;
+        }
+        ul.comment{
+            margin: 10px;
+            border-radius: 5px 5px;
+            border:solid 1px black;
+            background: rgba(255, 255, 255, 0.19);
+        }
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    {% for key, commentss in comments  %}
+        <h3>{{ key }}</h3>
+        <div class="comments">
+            {% for comment in commentss %}
+                <ul class="comment">
+                    <li>{{ comment['created_at']|date('Y,m d') }}</li>
+                    <li>{{ comment['comment'] }}</li>
+                    <li>Delete | Edit</li>
+                </ul>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+
+{% endblock main %}

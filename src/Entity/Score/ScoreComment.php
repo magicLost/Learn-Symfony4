@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Score;
 
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Score\ScoreCommentRepository")
  * @ORM\Table(name="score_comment")
  */
 class ScoreComment
@@ -34,10 +34,12 @@ class ScoreComment
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Score")
+     * @ORM\ManyToOne(targetEntity="Score", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $score;
+
+
 
 
     /**

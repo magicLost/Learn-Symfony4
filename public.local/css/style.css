@@ -3,17 +3,16 @@
     margin: 0;
 }
 #wrapper{
-    //width: 600px;
     margin: 1% auto;
 }
 body, #wrapper{
-    height:94%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0);
 }
 html{
+    height: 100%;
     color: rgb(225, 223, 177);
     font-family: "MV Boli";
-    height: 100%;
     background:  url('../images/back.jpg') no-repeat top fixed black;
 }
 
@@ -64,51 +63,11 @@ div#favicon a img{
 /*Main divs*/
 #main{
     color: rgb(225, 223, 177);
-    min-height: 100%;
+    min-height: 90%;
     margin-bottom: -50px;
     background-color: rgba(0, 0, 0, 0.5);
     box-shadow : 0 0 10px rgba(225, 223, 177, 0.4);
 }
 /*end Main divs*/
 
-/*divs in spinColor div*/
 
-body div#desc a{
-    text-decoration: none;
-    color: rgb(225, 223, 177);
-}
-
-body div#desc h3 {
-    font-family: "MV Boli";
-    color: rgb(225, 223, 177);
-    text-shadow: 1px 1px 2px black;
-    padding-top: 5%;
-    padding-bottom: 1%;
-    text-align: center;
-}
-
-
-/*End divs in spinColor div*/
-
-/* Best Score  */
-
-div#tableBestScore{
-    font-size: 1.2em;
-    width: 80%;
-    margin: auto;
-    padding-top: 30px;
-    //background-color: #d3fff3;
-}
-
-div#tableBestScore table{
-    margin: auto;
-}
-
-div#tableBestScore table td{
-    //border-right: 1px solid blanchedalmond;
-    //border-left: 1px solid blanchedalmond;
-    text-align: center;
-    padding: 10px;
-}
-
-/* End Best Score  */

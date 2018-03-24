@@ -20,10 +20,19 @@
 
     <div id="nav" >
         <a title="Best score table" href="{{ path('score') }}">B</a>
-        <a title="Contact us" href="#">C</a>
+        <a title="Contact us" href="{{ path('learn_homepage') }}">C</a>
+        <a title="Administration" href="{{ path('admin_home') }}">A</a>
+        <a title="Administration" href="{{ path('manager_home') }}">M</a>
     </div>
 
-    <div id="main">{% block main %}{% endblock %}</div>
+    <div id="main">
+        {% for msg in app.session.flashBag.get('success')  %}
+            <div class="alert alert-success">
+                {{ msg }}
+            </div>
+        {%  endfor %}
+        {% block main %}{% endblock %}
+    </div>
 </div>
 
 <footer class="footer">

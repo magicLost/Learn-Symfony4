@@ -9,17 +9,82 @@
 
     <style type="text/css">
 
+        #player_info{
+            text-align: center;
+        }
+
+        .comment{
+            background-color: rgba(255, 250, 197, 0.14);
+        }
+
+        .comment p, h5{
+            padding: 5px;
+            text-align: center;
+        }
+
     </style>
 
 {% endblock stylesheets %}
 
 {% block main %}
+    <div id="player_info">
+        <h1>{{ title }}</h1>
 
-    <h1>{{ title }}</h1>
+        <h3>{{ score.name }}</h3>
 
-    <h3>{{ score.name }}</h3>
+        <p>Счет = {{ score.score }}</p>
+        <p>Дата = {{ score.date | date('Y-m-d H:i:s') }}</p>
+    </div>
 
-    <p>Счет = {{ score.score }}</p>
-    <p>Дата = {{ score.date | date('Y-m-d H:i:s') }}</p>
+
+    <hr />
+    <h3>Comments</h3>
+
+    <div id="comments">
+
+    </div>
 
 {% endblock main %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+            $.ajax({
+
+                type: "POST",
+
+                url: "{{ url("score_getcomments", {'name': score.name}) }}",
+
+                success: function(comments){
+                    var div = $('#comments');
+                    var count = 1;
+                    var html = '<ul>';
+
+                    for(var comment in comments){
+                        html += '<li><div class="comment">';
+
+                        html += '<h5>' + comments[comment].name + '</h5>';
+                        html += '<p>' + comments[comment].date + '</p>';
+                        html += '<p>' + comments[comment].comment + '</p>';
+
+                        //console.log(comments[comment].name);
+                        html += '<div></li>';
+                        count++
+                    }
+
+                    html += '</ul>';
+
+                    div.html(html);
+                },
+
+                dataType: 'json'
+
+            });
+
+
+
+    </script>
+
+{% endblock javascripts %}

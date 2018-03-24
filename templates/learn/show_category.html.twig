@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <div id="category">
+
+        {{ dump(category) }}
+
+        {% for cat in category %}
+            <p>Length == {{ cat.fortuneCookies|length }}</p>
+        {% endfor %}
+
+        <br />
+        {{ dump(printedCategory) }}
+        <p>Printed category == {{ printedCategory|number_format }} total</p>
+
+    </div>
+
+{% endblock main %}

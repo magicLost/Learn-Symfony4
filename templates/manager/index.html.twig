@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+        ul{
+            padding-left: 40px;
+        }
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <ul>
+        <li>
+            <a href="{{ path('manager_show_users') }}">Show users</a>
+        </li>
+        <li>
+            <a href="{{ path('manager_show_companies') }}">Show companies</a>
+        </li>
+    </ul>
+
+
+
+{% endblock main %}
+

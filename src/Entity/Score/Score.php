@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Score;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ScoreRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Score\ScoreRepository")
  */
 class Score
 {
@@ -37,8 +38,28 @@ class Score
      */
     private $isActive;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ScoreComment", mappedBy="score")
+     * @ORM\OrderBy({"createdAt"="DESC"})
+     */
+    private $comments;
+
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
 
     //SETTERS AND GETTERS
+
+    /**
+     * @return ArrayCollection|ScoreComment[]
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 
     /**
      * @return string

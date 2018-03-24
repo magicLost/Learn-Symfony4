@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+        ul{
+            padding-left: 40px;
+        }
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_comments') }}">Admin comments</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_users') }}">Users</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_add_cookie') }}">Add cookie</a>
+        </li>
+    </ul>
+
+{% endblock main %}

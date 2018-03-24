@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        li.list-group-item{
+            background: #6a6a6a;
+        }
+        a{
+            color: #e937a1;
+        }
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <div class="container">
+        <ul class="list-group"><p>{{ user.name }}</p>
+            <li class="list-group-item">He is from {{ user.region }}</li>
+            <li class="list-group-item">
+                <ul class="list-group"><p>Companies where he worked.</p>
+                    {% for company in user.company %}
+                        <li class="list-group-item">{{ company.name }} | <a href="{{ path('admin_delete_company', {
+                                user_id: user.id,
+                                company_id: company.id
+                            }) }}">Delete</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+{% endblock main %}

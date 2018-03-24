@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Admin\User;
 use App\Entity\Score;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,11 +35,17 @@ class TestController extends Controller
     public function index()
     {
 
-        $scores = $this->doctrine->getRepository(Score::class)->findByTerm('ta');
+        /**@var UserRepository $user_repository */
+
+        $user_repository = $this->entityManager->getRepository(User::class);
+
+        //$users = $user_repository->findLastFifty();
+
+        $users = $user_repository->findAll();
 
         return $this->render('test/index.html.twig', [
-            'title' => 'Just test',
-            'scores' => $scores
+            'title' => 'Our users',
+            'users' => $users
         ]);
     }
 }

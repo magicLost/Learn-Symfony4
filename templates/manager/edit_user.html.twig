@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                {{ form_start(userForm) }}
+
+                {{ form_row(userForm.name) }}
+                {{ form_row(userForm.tall) }}
+                {{ form_row(userForm.weight) }}
+                {{ form_row(userForm.region, {
+                    'label': 'Where are you from'
+                }) }}
+                {{ form_row(userForm.born) }}
+                {{ form_row(userForm.isActive) }}
+                {{ form_row(userForm.isEverWorking) }}
+
+                <h3>Companies</h3>
+                <div class="row">
+                    {% for user_company_form in userForm.company %}
+                        <div class="col-xs-4">
+                            <button class="delete_company"><span class="fa fa-close">Delete</span></button>
+                            {{ form_errors(user_company_form) }}
+                            {{ form_row(user_company_form.company) }}
+                            {{ form_row(user_company_form.yearsWork) }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Edit</button>
+
+
+                {{ form_end(userForm) }}
+
+                <button class="add_company"><span class="fa fa-plus-circle">Add company</span></button>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock main %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/javascript">
+        $(function(){
+            const buttons_delete = $('button.delete_company');
+            buttons_delete.on('click', function(event){
+                event.preventDefault();
+                $(this).parent().remove();
+            });
+
+            const button_add = $('button.add_company');
+            button_add.on('click', function(event){
+                event.preventDefault();
+            });
+        });
+    </script>
+
+
+{% endblock javascripts %}

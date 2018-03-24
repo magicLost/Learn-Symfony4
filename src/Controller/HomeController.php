@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Service\MarkdownHelper;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -36,44 +37,3 @@ EOL;
     }
 }
 
-trait LoggerTrait
-{
-    /**
-     * @var LoggerInterface|null
-     */
-    private $logger;
-    /**
-     * @required
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    private function logInfo(string $message, array $context = [])
-    {
-        if ($this->logger) {
-            $this->logger->info($message, $context);
-        }
-    }
-}
-
-class SlackClient
-{
-
-    use LoggerTrait;
-
-    public function __construct()
-    {
-        //..
-    }
-
-    public function sendMessage(string $from, string $message)
-    {
-        $this->logInfo('Beaming a message to Slack!', [
-            'message' => $message
-        ]);
-        //...
-    }
-
-}

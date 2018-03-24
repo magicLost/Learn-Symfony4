@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Score;
 
-use App\Entity\Score;
+use App\Entity\Score\Score;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -35,12 +35,13 @@ class ScoreRepository extends ServiceEntityRepository
     /**
      * @return \App\Entity\Score[]
      */
-    public function findAllActiveOrderByScore()
+    public function findAllActiveOrderByRecentlyActive()
     {
         return $this->createQueryBuilder('score')
             ->where('score.isActive = :isActive')
             ->setParameter('isActive', true)
-            ->orderBy('score.score', 'DESC')
+            ->leftJoin('score.comments', 'score_comment')
+            ->orderBy('score_comment.createdAt', 'DESC')
             ->setMaxResults(30)
             ->getQuery()
             ->getResult();

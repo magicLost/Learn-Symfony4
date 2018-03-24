@@ -8,7 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nelmio\Alice\Loader\NativeLoader;
 
-class ScoreFixtures extends Fixture
+class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {

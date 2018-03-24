@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        li.list-group-item{
+            background: #6a6a6a;
+        }
+        a{
+            color: #e937a1;
+        }
+    </style>
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h1>{{ title }}</h1>
+    <ul class="list-group">
+        {% for company in companies %}
+            <li class="list-group-item">
+                {{ company.name }} |
+                <a href="{{ path("manager_company_edit", { id: company.id }) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock main %}

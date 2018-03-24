@@ -1,10 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        li.list-group-item{
+            background: #6a6a6a;
+        }
+        a{
+            color: #e937a1;
+        }
+        div.name{
+            text-align: center;
+        }
+    </style>
+
+{% endblock stylesheets %}
 
 {% block main %}
 
     <h1>{{ title }}</h1>
-    {{ dump(scores) }}
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 name">{{ user.name }} |
+                            <a href="{{ path("manager_user_edit", { id: user.id }) }}">Edit</a></div>
+                        {% for user_company in user.company %}
+                            <div class="col">{{ user_company.company.name }} | {{ user_company.yearsWork }}</div>
+                        {% endfor %}
+                    </div>
 
-{% endblock %}
+                </div>
+
+
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock main %}

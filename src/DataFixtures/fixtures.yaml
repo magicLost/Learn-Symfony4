@@ -1,13 +1,80 @@
-App\Entity\Score:
+App\Entity\Admin\Company:
+  company_{1..15}:
+    name: <company()>
+    foundedAt: <dateTimeBetween('-150 years', '-5 years')>
+
+App\Entity\Admin\User:
+  users_{1..25}:
+    name: <firstName()>
+    region: <country()>
+    tall: <numberBetween(154, 203)>
+    weight: <numberBetween(53, 138)>
+    isActive: <boolean(90)>
+    born: <dateTimeBetween('-55 years', '-18 years')>
+    isEverWorking: <boolean(90)>
+    #company: '<numberBetween(0, 5)>x @company_*'
+
+App\Entity\Admin\UserCompany:
+  user_company_{1..50}:
+    user: '@users_*'
+    company: '@company_*'
+    yearsWork: <numberBetween(1, 30)>
+
+App\Entity\Score\Score:
   score_{1..15}:
     name: <firstName()>
     real_name: <name()>
     score: <numberBetween(100, 5600)>
     isActive: <boolean(80)>
 
-App\Entity\ScoreComment:
-  score.comment_{1..40}:
-    name: <userName()>
+App\Entity\Score\ScoreComment:
+  score.comment_{1..120}:
+    name: '@score_*->name'
     comment: <paragraph()>
     createdAt: <dateTimeBetween('-6 months', 'now')>
     score: '@score_*'
+
+App\Entity\Learn\Category:
+    category_job:
+        name: Job
+        iconKey: fa-dollar
+    category_lunch:
+        name: Lunch
+        iconKey: fa-spoon
+    category_proverb:
+        name: Proverbs
+        iconKey: fa-quote-left
+    category_pets:
+        name: Pets
+        iconKey: fa-paw
+    category_love:
+        name: Love
+        iconKey: fa-heart
+    category_lucky_number:
+        name: Lucky Number
+        iconKey: fa-bug
+
+App\Entity\Learn\FortuneCookie:
+    fortune_base (template):
+        createdAt: <dateTimeBetween('-5 years', 'now')>
+        numberPrinted: <numberBetween(100, 99999)>
+        discontinued: <boolean(50)>
+
+    fortune_job{1..4} (extends fortune_base):
+        category: '@category_job'
+        fortune: <realText(100)>
+    fortune_lunch{1..4} (extends fortune_base):
+        category: '@category_lunch'
+        fortune: <realText(100)>
+    fortune_proverb{1..3} (extends fortune_base):
+        category: '@category_proverb'
+        fortune: <realText(100)>
+    fortune_pets{1..2} (extends fortune_base):
+        category: '@category_pets'
+        fortune: <realText(100)>
+    fortune_love{1..3} (extends fortune_base):
+        category: '@category_love'
+        fortune: <realText(100)>
+    fortune_lucky_number{1..5} (extends fortune_base):
+        category: '@category_lucky_number'
+        fortune: <realText(100)>

@@ -1,0 +1,17 @@
+{{ form_start(cookieForm) }}
+                    {# form_widget(cookieForm) #}
+
+                    {{ form_row(cookieForm.category) }}
+                    {{ form_row(cookieForm.fortune) }}
+                    {{ form_row(cookieForm.numberPrinted, {
+                        'label': 'How many times printed'
+                    }) }}
+                    {{ form_row(cookieForm.discontinued) }}
+                    {{ form_row(cookieForm.createdAt) }}
+
+
+<button type="submit" class="btn btn-primary" formnovalidate>{{ buttonName }}</button>
+
+
+
+{{ form_end(cookieForm) }}
