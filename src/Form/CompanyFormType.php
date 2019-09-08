@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Admin\Company;
 use App\Entity\Admin\User;
+use App\Entity\Admin\UserCompany;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -20,10 +21,13 @@ class CompanyFormType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('usersWorkingIn', EntityType::class, [
-                'class' => User::class,
+                'class' => UserCompany::class,
+                'query_builder' => function($repository){
+                    $repository->findUsersToForm();
+                },
                 'multiple' => true,
                 'expanded' => true,
-                'choice_label' => 'name',
+                'choice_label' => 'user',
                 'by_reference' => false,
             ])
         ;

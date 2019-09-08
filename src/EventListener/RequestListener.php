@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class RequestListener
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $entityManager;
 

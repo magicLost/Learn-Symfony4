@@ -1,0 +1,31 @@
+easy_admin:
+    site_name: Super<i><strong>Admin</strong></i>
+    design:
+        brand_color: 'cyan'
+        assets:
+            css: [ 'css/my_easy_admin_style.css' ]
+
+    list:
+        title: 'List of %%entity_label%%'
+        actions: ['show']
+
+
+    entities:
+        # List the entity class name you want to manage
+        AuthUser:
+            class: App\Entity\Auth\User
+            label: auth users
+        Score:
+            class: App\Entity\Score\Score
+            label: Scores
+            help: 'Some help information'
+            list:
+                title: 'List of best scorrers'
+                help: 'Another help info'
+                actions:
+                    - { name: edit, icon: pencil, label: Edit }
+                    - { name: show, icon: info-circle, label: '' }
+            search:
+                help: null
+        AdminUser:
+            class: App\Entity\Admin\User

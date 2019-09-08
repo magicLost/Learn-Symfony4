@@ -28,10 +28,34 @@ class UserRepository extends ServiceEntityRepository
     public function findLastFifty()
     {
         return $this->createQueryBuilder('users')
-            ->setMaxResults(50)
             ->leftJoin('users.company', 'company')
             ->addSelect('company')
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllUsersAndCompanies()
+    {
+        return $this->createQueryBuilder('users')
+            ->leftJoin('users.company', 'user_company')
+            ->addSelect('user_company')
+            ->leftJoin('user_company.company', 'company')
+            ->addSelect('company')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllUsersByCompanyName(string $company_name)
+    {
+        return $this->createQueryBuilder('users')
+            ->leftJoin('users.company', 'user_company')
+            ->addSelect('user_company')
+            ->leftJoin('user_company.company', 'company')
+            ->addSelect('company')
+            ->andWhere('company.name LIKE :name')
+            ->setParameter("name", '%'.$company_name.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

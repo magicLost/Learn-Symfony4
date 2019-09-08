@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% trans %}SpinColor.homepage.title{% endtrans %}
+{% endblock title %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <link rel="shortcut icon" href="{{ asset('TemplateData/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ asset('TemplateData/style.css') }}">
+
+{% endblock stylesheets %}
+
+{% block main %}
+
+    <h3 class="text-center">{% trans %}SpinColor.homepage.title{% endtrans %}</h3>
+
+    <div class="webgl-content">
+        <div id="gameContainer" style="width: 960px; height: 600px"></div>
+        <div class="footer">
+            <div class="webgl-logo"></div>
+            <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+            <div class="title">Mine</div>
+        </div>
+    </div>
+
+    <div class="col-sm-12" id="button_c">
+        <button>Start C#</button>
+    </div>
+
+
+{% endblock main %}
+
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        class AjaxRequest{
+
+            constructor(){
+
+            }
+
+            request(){
+
+                $.ajax({
+                    url: "{{ path('test_index') }}",
+                    method: "POST",
+                    success: function(data){
+
+                        console.log(data);
+
+                    }
+                });
+
+            }
+        }
+
+        const ajax_request = new AjaxRequest();
+
+
+
+    </script>
+
+    <script src="{{ asset('TemplateData/UnityProgress.js') }}"></script>
+    <script src="{{ asset('Build/UnityLoader.js') }}"></script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Build.json", {onProgress: UnityProgress});
+
+        const button = $("#button_c");
+        button.on('click', function (event) {
+            event.preventDefault();
+
+            gameInstance.SendMessage("Main Camera", "ShowResult");
+        })
+    </script>
+
+
+
+{% endblock javascripts %}

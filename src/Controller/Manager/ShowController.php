@@ -34,7 +34,7 @@ class ShowController extends Controller
 
         //$users = $user_repository->findLastFifty();
 
-        $users = $user_repository->findAll();
+        $users = $user_repository->findLastFifty();
 
         return $this->render('manager/show_users.html.twig', [
             'title' => 'Our users',

@@ -1,0 +1,6 @@
+App\Entity\Score\Score:
+  score_{1..20}:
+    name: <firstName()>
+    real_name: <name()>
+    score: <numberBetween(100, 5600)>
+    isActive: <boolean(80)>

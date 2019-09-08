@@ -35,6 +35,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request }
 
+    user_agent_subscr:
+        class: App\EventListener\UserAgentSubscriber
+        tags:
+            - {name: kernel.event_subscriber}
+
+
     App\Twig\MineExtension:
         tags:
             - { name: twig.extension }

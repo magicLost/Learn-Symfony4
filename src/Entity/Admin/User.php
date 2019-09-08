@@ -4,8 +4,10 @@ namespace App\Entity\Admin;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Admin\Company;
 
 
@@ -62,7 +64,13 @@ class User
     //@ORM\ManyToMany(targetEntity="Company", inversedBy="usersWorkingIn")
     //@ORM\JoinTable(name="user_company")
     /**
-     * @ORM\OneToMany(targetEntity="UserCompany", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(
+     *     targetEntity="UserCompany",
+     *     mappedBy="user",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
+     * @Assert\Valid()
      */
     private $company;
 
@@ -205,15 +213,15 @@ class User
         $this->isEverWorking = $isEverWorking;
     }
 
-    public function addCompany(Company $company)
+    public function addCompany(UserCompany $user_company)
     {
-        if($this->company->contains($company))
+        if($this->company->contains($user_company))
             return;
 
-        $this->company[] = $company;
+        $this->company[] = $user_company;
 
         //not needed for persistance but help to be sync
-        $company->addUsersWorkingIn($this);
+        $user_company->setUser($this);
     }
 
     public function setCompany(array $company)
@@ -248,6 +256,25 @@ class User
     public function getCompany()
     {
         return $this->company;
+    }
+
+    public function getCompanyOverTwentyYears(){
+
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->gt('yearsWork', 20))
+            ->orderBy(['yearsWork' => 'DESC']);
+
+        return $this->getCompany()->matching($criteria);
+
+        /*return $this->getCompany()->filter(function (UserCompany $user_company){
+            return $user_company->getYearsWork() > 20;
+        });*/
+
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
 }

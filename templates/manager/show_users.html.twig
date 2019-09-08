@@ -20,14 +20,25 @@
 
 {% block main %}
 
-    <h1>{{ title }}</h1>
-    <ul class="list-group">
-        {% for user in users %}
-            <li class="list-group-item">
-                {{ user.name }} |
-                <a href="{{ path("manager_user_edit", { id: user.id }) }}">Edit</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <h1 class="col-lg-12">{{ title }}</h1>
+        <div class="col-lg-5 text-center bg-info">Name</div>
+        <div class="col-lg-2 text-center bg-info"># of companies</div>
+        <div class="col-lg-5 text-center bg-info">Utilities</div>
+
+    {% for user in users %}
+
+        <div class="col-lg-5 text-center">{{ user.name }}</div>
+        <div class="col-lg-2 text-center">
+            {{ user.company|length }}
+            ({{ user.companyOverTwentyYears|length }} expert)
+        </div>
+        <div class="col-lg-5 text-center">
+            <a href="{{ path("manager_user_edit", { id: user.id }) }}">Edit</a>
+        </div>
+
+    {% endfor %}
+
+
+
 
 {% endblock main %}

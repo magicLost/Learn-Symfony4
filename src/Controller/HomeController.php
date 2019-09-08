@@ -2,20 +2,31 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Learn_phpunit\Enclosure;
 use App\Service\MarkdownHelper;
-use Psr\Log\LoggerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
      * @Route("/", name="home")
      */
-    public function home(MarkdownHelper $markdownHelper)
+    public function home(Request $request, MarkdownHelper $markdownHelper)
     {
-
+        $request->setLocale('ru');
 
         $articleContent = <<<EOL
 
@@ -30,10 +41,14 @@ EOL;
 
         $articleContent = $markdownHelper->parse($articleContent);
 
+        //$enclosures = $this->entityManager->getRepository(Enclosure::class)->findAll();
+
         return $this->render("home/home.html.twig", [
             'title' => "Welcome to home page.",
-            'article' => $articleContent
+            'article' => $articleContent,
+            //'enclosures' => $enclosures
         ]);
     }
+
 }
 

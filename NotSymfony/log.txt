@@ -1,0 +1,7 @@
+
+[2018-04-05 13:45:15] main.DEBUG: The logger just got started from yaml [] []
+[2018-04-05 13:45:15] main.INFO: RUUUUUUUUUNN [] []
+[2018-04-05 13:45:27] main.DEBUG: The logger just got started from yaml [] []
+[2018-04-05 13:45:27] main.INFO: RUUUUUUUUUNN [] []
+[2018-04-05 13:45:48] main.DEBUG: The logger just got started from yaml [] []
+[2018-04-05 13:45:48] main.INFO: RUUUUUUUUUNN [] []

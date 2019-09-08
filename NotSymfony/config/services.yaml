@@ -1,0 +1,17 @@
+parameters:
+    logger_start_message: "The logger just got started from yaml"
+
+services:
+    logger:
+        class: Monolog\Logger
+        public: true
+        arguments:
+            - main
+            - ['@logger.stream_handler']
+        calls:
+            - [ debug, ['%logger_start_message%']]
+
+    logger.stream_handler:
+        class: Monolog\Handler\StreamHandler
+        public: true
+        arguments: ['%root_dir%/log.txt']

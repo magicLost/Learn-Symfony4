@@ -29,4 +29,8 @@ class Test
         }
 
     }
+
+    function dump(string $str){
+        dump($str);
+    }
 }

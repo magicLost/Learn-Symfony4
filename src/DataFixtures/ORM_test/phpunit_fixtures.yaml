@@ -1,0 +1,15 @@
+App\Entity\Learn_phpunit\Enclosure:
+    enclosure_{1..3}:
+
+App\Entity\Learn_phpunit\Dinosaur:
+    dinosaur_{1..8}:
+      genus: <dinosaurName()>
+      length: <numberBetween(1, 35)>
+      isCarnivorous: <boolean(0)>
+      enclosure: '@enclosure_*'
+
+App\Entity\Learn_phpunit\Security:
+    security_{1..6}:
+      name: <securityName()>
+      isActive: <boolean(100)>
+      enclosure: '@enclosure_*'

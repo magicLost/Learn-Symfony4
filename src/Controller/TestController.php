@@ -5,47 +5,136 @@ namespace App\Controller;
 
 use App\Entity\Admin\User;
 use App\Entity\Score;
+use App\Form\ScoreFormType;
+use App\Service\EnclosureBuilderService;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
+
 
 class TestController extends Controller
 {
 
-    /**
-     * @var EntityManagerInterface
-     */
     private $entityManager;
+    private $enclosureBuilderService;
+    private $mailer;
+    private $translator;
+    private $authorizationChecker;
     /**
-     * @var ManagerRegistry
+     * @var LoggerInterface
      */
-    private $doctrine;
+    private $logger;
 
-    public function __construct(EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        EnclosureBuilderService $enclosureBuilderService,
+        \Swift_Mailer $mailer,
+        TranslatorInterface $translator,
+        AuthorizationCheckerInterface $authorizationChecker,
+        LoggerInterface $logger
+    )
     {
 
         $this->entityManager = $entityManager;
-        $this->doctrine = $doctrine;
+        $this->enclosureBuilderService = $enclosureBuilderService;
+        $this->mailer = $mailer;
+        $this->translator = $translator;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->logger = $logger;
     }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/{_locale}/test", name="test_index", requirements={"en|ru"})
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        /**@var UserRepository $user_repository */
+        //dump($request->getSession());
 
-        $user_repository = $this->entityManager->getRepository(User::class);
+        if($request->isMethod("POST") && $request->isXmlHttpRequest()){
 
-        //$users = $user_repository->findLastFifty();
+            $result = ($this->authorizationChecker->isGranted('ROLE_USER')) ? 'log in' : 'denied';
 
-        $users = $user_repository->findAll();
+            $headers = [];
+
+            foreach($request->headers as $key=>$val){
+
+                $headers[$key] = $val;
+
+            }
+
+            $this->logger->error("Ajax_headers", $headers);
+
+            return $this->json($headers);
+
+        }
+
+        $translated = $this->translator->trans("Hello.people");
+
+        $result = 'hello';
 
         return $this->render('test/index.html.twig', [
-            'title' => 'Our users',
-            'users' => $users
+            'title' => 'Test',
+            'result' => $result
         ]);
+
+
+        /*$result = ($this->authorizationChecker->isGranted('ROLE_USER')) ? 'log in' : 'denied';
+
+
+        $headers = ['result' => $result];
+
+        foreach($request->headers as $key=>$val){
+
+            $headers[$key] = $val;
+
+        }
+
+        //$this->logger->error("Ajax_headers", $headers);
+
+        return $this->json($headers);*/
+
     }
+
+    /*public function index()
+    {
+        //dump($this->mailer);die;
+
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('send@example.com')
+            ->setTo('recipient@example.com')
+            ->setBody(
+                $this->renderView(
+                // templates/emails/registration.html.twig
+                    'emails/registration.html.twig',
+                    array('name' => "Diana")
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+
+        ;
+
+        $result = $this->mailer->send($message);
+
+        return $this->render('test/index.html.twig', [
+            'title' => 'Test',
+            'result' => $result
+        ]);
+    }*/
 }

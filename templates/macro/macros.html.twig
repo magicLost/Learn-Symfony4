@@ -1,0 +1,103 @@
+{% macro echo_embed_form_user(user_car_form) %}
+
+    {% import _self as macro %}
+
+    <div class="col-lg-4 mb-2">
+        <div class="card">
+            <button class="delete_company btn btn-danger"><span class="fa fa-close">Delete</span></button>
+            <div class="form-group">
+                {{ form_errors(user_car_form) }}
+            </div>
+            {{ macro.print_form_row(user_car_form.car) }}
+            {{ macro.print_form_row(user_car_form.year_emb.children.years) }}
+        </div>
+    </div>
+
+{% endmacro %}
+
+{% macro echo_embed_form_car(user_car_form) %}
+
+    {% import _self as macro %}
+
+    <div class="col-lg-4 mb-2">
+        <div class="card">
+            <button class="delete_company btn btn-danger"><span class="fa fa-close">Delete</span></button>
+            <div class="form-group">
+                {{ form_errors(user_car_form) }}
+            </div>
+            {{ macro.print_form_row(user_car_form.user) }}
+            {{ macro.print_form_row(user_car_form.year_emb.children.years) }}
+        </div>
+    </div>
+
+{% endmacro %}
+
+{% macro print_form_row(form_row) %}
+
+    <div class="form-group">
+
+        {% if not form_row.vars.valid %}
+            {% set name_classes = "form-control bg-dark text-info is-invalid" %}
+        {% else %}
+            {% set name_classes = 'form-control bg-dark text-info' %}
+        {% endif %}
+
+        {{ form_label(form_row, null, {
+            'label_attr': {
+                'class': 'sr-only'
+            }
+        }) }}
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text bg-dark text-info">{{ form_row.vars.label }}</div>
+            </div>
+            {{ form_widget(form_row, {
+                'attr': {
+                    'class': name_classes
+                }
+            }) }}
+
+            {% if not form_row.vars.valid %}
+
+                {% for error in form_row.vars.errors %}
+                    {% if loop.first %}
+                        <div class="invalid-feedback pl-5">
+                            <p> {{ error.message }}</p>
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endmacro %}
+
+{% macro print_ajax_form_row(form_row) %}
+
+    <div class="form-group">
+
+        {{ form_label(form_row, null, {
+            'label_attr': {
+                'class': 'sr-only'
+            }
+        }) }}
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text bg-dark text-info">{{ form_row.vars.label }}</div>
+            </div>
+            {{ form_widget(form_row, {
+                'attr': {
+                    'class': 'form-control bg-dark text-info'
+                }
+            }) }}
+
+        </div>
+
+    </div>
+
+{% endmacro %}

@@ -1,4 +1,7 @@
 <!doctype html>
+
+{% set locale = app.session.get("_locale") %}
+
 <html lang="en">
 <head>
     <title>{% block title %}Welcome to my site{% endblock %}</title>
@@ -6,26 +9,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% block stylesheets %}
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     {% endblock %}
 </head>
 <body>
-<div id="wrapper">
-    <div id="favicon">
-        <a href="{{ path('home') }}"><img src="{{ asset('images/icon_yellow.png') }}" alt="Icon"></a>
+<div class="container" id="wrapper">
+    <div class="row  button-group-lg">
+        <div class="col-12 button-group-lg  bg-dark">
+            <a class="btn text-center text-white " href="{{ path('home') }}">Home</a>
+            <a class="btn text-center text-white" title="Best score table" href="{{ path('score') }}">Best score</a>
+            <a class="btn text-center text-white" title="Contact us" href="{{ path('learn_homepage') }}">Contact us</a>
+            <a class="btn text-center text-white" title="Spin color" href="{{ path('spin_color_home') }}">Spin color</a>
+            <!--a class="btn text-center text-white" title="Administration" href="{#{ path('admin_home') }#}">Admin</a-->
+            <a class="btn text-center text-white" title="Manager" href="{{ path('manager_home') }}">Manager</a>
+            <a class="btn text-center text-white" title="Test" href="{{ path('test_index') }}">Test</a>
+
+            <div id="div_locale_form">
+                <form action="{{ path("change_locale") }}" method="post">
+                    <select class="form-control bg-dark ext-center text-light" id="locale_select">
+                        {% if locale == 'ru' %}
+                            <option name="locale"  value="en">en</option>
+                            <option name='locale' selected value="ru">ru</option>
+                        {% else %}
+                            <option name="locale" selected value="en">en</option>
+                            <option name='locale'  value="ru">ru</option>
+                        {% endif %}
+                    </select>
+                </form>
+            </div>
+
+            {% if is_granted("ROLE_USER") %}
+                <a class="btn text-center text-white float-right" title="Logout" href="{{ path('fos_user_security_logout') }}">Logout &#128275;</a>
+            {% else %}
+                <a class="btn text-center text-white float-right" title="Login" href="{{ path('fos_user_security_login') }}">Login &#128274;</a>
+            {% endif %}
+
+
+
+        </div>
     </div>
 
-    <div id="nav" >
-        <a title="Best score table" href="{{ path('score') }}">B</a>
-        <a title="Contact us" href="{{ path('learn_homepage') }}">C</a>
-        <a title="Administration" href="{{ path('admin_home') }}">A</a>
-        <a title="Administration" href="{{ path('manager_home') }}">M</a>
-    </div>
 
-    <div id="main">
+
+    <div class="row main p-2">
         {% for msg in app.session.flashBag.get('success')  %}
             <div class="alert alert-success">
                 {{ msg }}
@@ -33,16 +61,23 @@
         {%  endfor %}
         {% block main %}{% endblock %}
     </div>
+
+    <footer class="row footer">
+        <div class="col-12 text-center p-3">
+            <span class="text-muted">Made with <i class="fa fa-heart" style="color: red;"></i> by the guys and gals at <a href="https://knpuniversity.com">KnpUniversity</a></span>
+        </div>
+    </footer>
 </div>
 
-<footer class="footer">
-    <div class="container text-center">
-        <span class="text-muted">Made with <i class="fa fa-heart" style="color: red;"></i> by the guys and gals at <a href="https://knpuniversity.com">KnpUniversity</a></span>
-    </div>
-</footer>
+
 {% block javascripts %}
-    <script src="{{ asset('js/lib/jquery-3.1.0.min.js') }}"></script>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
+
 {% endblock %}
 </body>
 </html>

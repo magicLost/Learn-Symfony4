@@ -2,7 +2,25 @@
     padding: 0;
     margin: 0;
 }
+body{
+    //height: 100%;
+    color: rgb(225, 223, 177);
+    font-family: "MV Boli";
+    background:  url('../images/back.jpg') no-repeat top fixed black;
+}
 #wrapper{
+    //color: rgb(225, 223, 177);
+    //min-height: 90%;
+    //margin-bottom: -50px;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow : 0 0 10px rgba(225, 223, 177, 0.4);
+}
+
+div#div_locale_form{
+    display: none;
+}
+/*#wrapper{
     margin: 1% auto;
 }
 body, #wrapper{
@@ -20,11 +38,16 @@ h1{
     text-align: center;
 }
 
+div#wrap{
+    background-color: rgba(0, 0, 0, 0.32);
+    color: #f0e6bb;
+}
+
 
 
 /* Nav */
 
-div#nav{
+/*div#nav{
     width: 50px;
     height: 50px;
     float:right;
@@ -45,7 +68,7 @@ div#nav a{
 
 /*Icon*/
 
-div#favicon{
+/*div#favicon{
     width: 50px;
     height: 50px;
     float:left;
@@ -58,10 +81,14 @@ div#favicon a img{
     height: 100%;
 }
 
+div.favicon{
+    height: 50px;
+}
+
 
 /*end Icon*/
 /*Main divs*/
-#main{
+/*#main{
     color: rgb(225, 223, 177);
     min-height: 90%;
     margin-bottom: -50px;

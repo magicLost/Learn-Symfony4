@@ -27,3 +27,4 @@ doctrine:
                 alias: App
         filters:
             fortune_cookie_discontinued: App\Doctrine\DiscontinuedFilter
+

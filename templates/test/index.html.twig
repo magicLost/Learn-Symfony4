@@ -1,46 +1,74 @@
 {% extends 'base.html.twig' %}
 
+{% import "macro/form_macros.html.twig" as macros %}
+
 {% block title %}
     {{ title }}
 {% endblock title %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    <style type="text/css">
-        li.list-group-item{
-            background: #6a6a6a;
-        }
-        a{
-            color: #e937a1;
-        }
-        div.name{
-            text-align: center;
-        }
-    </style>
-
-{% endblock stylesheets %}
 
 {% block main %}
 
-    <h1>{{ title }}</h1>
-    <ul class="list-group">
-        {% for user in users %}
-            <li class="list-group-item">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 name">{{ user.name }} |
-                            <a href="{{ path("manager_user_edit", { id: user.id }) }}">Edit</a></div>
-                        {% for user_company in user.company %}
-                            <div class="col">{{ user_company.company.name }} | {{ user_company.yearsWork }}</div>
-                        {% endfor %}
-                    </div>
+    <h1 class="col-sm-12 text-center">{{ title }}</h1>
 
-                </div>
+    <p class="col-sm-12">Result == {{ result }}.</p>
+
+    <p class="col-sm-12">{% trans %}Test.message{% endtrans %}</p>
+
+    <p class="col-sm-12">Locale == {{ app.request.locale }}</p>
 
 
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="col-lg-12">
+
+        <button class="btn btn-primary" id="check_auth">Check authorization</button>
+
+    </div>
+
+    <div class="col-lg-12" id="result">
+
+    </div>
 
 {% endblock main %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        class AjaxRequest{
+
+            constructor(){
+
+            }
+
+            request(){
+
+                $.ajax({
+                    url: "{{ path('test_index') }}",
+                    method: "POST",
+                    success: function(data){
+
+                        console.log(data);
+
+                    }
+                });
+
+            }
+        }
+
+        const ajax_request = new AjaxRequest();
+        const div_result = $('div#result');
+        const check_auth_button = $('button#check_auth');
+
+        check_auth_button.on('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            ajax_request.request();
+        });
+
+    </script>
+
+{% endblock javascripts %}

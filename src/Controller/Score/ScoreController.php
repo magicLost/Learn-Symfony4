@@ -4,10 +4,13 @@ namespace App\Controller\Score;
 
 use App\Entity\Score\Score;
 use App\Entity\Score\ScoreComment;
+use App\Form\ScoreFormType;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ScoreController extends Controller
 {
@@ -20,12 +23,17 @@ class ScoreController extends Controller
      * @var ManagerRegistry
      */
     private $doctrine;
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
 
-    public function __construct(EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
+    public function __construct(EntityManagerInterface $entityManager, ManagerRegistry $doctrine, ValidatorInterface $validator)
     {
 
         $this->entityManager = $entityManager;
         $this->doctrine = $doctrine;
+        $this->validator = $validator;
     }
 
     /**
@@ -33,13 +41,17 @@ class ScoreController extends Controller
      */
     public function show_all()
     {
-        $scores = $this->doctrine->getRepository(Score::class)->findAllActiveOrderByRecentlyActive();
+        $form = $this->createForm(ScoreFormType::class);
+
+        //$scores = $this->doctrine->getRepository(Score::class)->findAllActiveOrderByRecentlyActive();
+        $scores = $this->doctrine->getRepository(Score::class)->findAll();
 
         //dump($this->doctrine->getRepository(Score::class));
 
         return $this->render('score/show.html.twig', [
             'title' => 'Best score table',
-            'scores' => $scores
+            'scores' => $scores,
+            'add_form' => $form->createView()
         ]);
     }
 
@@ -68,22 +80,76 @@ class ScoreController extends Controller
     /**
      * @Route("/score/add", name="score_add")
      */
-    public function add()
+    public function add(Request $request)
     {
-        $score = new Score();
-        $score->setScore(rand(11, 2300));
-        $score->setName("Robot".rand(1, 100));
+        if(!$request->isXmlHttpRequest()){
 
-        //tells doctrine that you want save this
-        $this->entityManager->persist($score);
-        //execute
-        $this->entityManager->flush();
+            return $this->json("Bad request");
 
-        return $this->render('score/add.html.twig', [
-            'title' => "Add your score information",
-            'score' => $score
-        ]);
+        }
+
+        if($request->isMethod('GET'))
+        {
+            //return $this->render();
+        }
+
+        try{
+
+            $post = $request->request;
+
+            $score = new Score();
+            $score->setScore((int)$post->get('score'));
+            $score->setRealName($post->get('real_name'));
+            $score->setName($post->get('name'));
+            $score->setIsActive($post->get('is_active'));
+
+            $errors = $this->validator->validate($score);
+
+            $count = $errors->count();
+
+            $errors_final = [];
+
+            $name = '';
+
+            if($count > 0){
+
+                for($i = 0; $i < $count; $i++)
+                {
+                    $error = $errors->get($i);
+
+                    if($name == $error->getPropertyPath())
+                        continue;
+
+                    $name = $error->getPropertyPath();
+
+                    $errors_final[$i] = [
+                        'name' => $error->getPropertyPath(),
+                        'message' => $error->getMessage()
+                    ];
+                }
+
+                return $this->json(['result' => 'not valid', "errors" => $errors_final]);
+
+            }
+
+            //tells doctrine that you want save this
+            $this->entityManager->persist($score);
+            //execute
+            $this->entityManager->flush();
+
+            return $this->json(['result' => 'success']);
+            //return $this->redirectToRoute('score');
+
+
+        }catch(\Exception $exception){
+
+            return $this->json(['result' => 'exception', "exception" => $exception->getMessage()]);
+
+        }
+
     }
+
+
 
     /**
      * @Route("/score/{name}/get_comments", name="score_getcomments", methods={"POST"})

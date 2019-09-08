@@ -36,8 +36,6 @@ class EditController extends Controller
 
         $form->handleRequest($request);
 
-
-
         if($form->isSubmitted() && $form->isValid()){
 
             $user = $form->getData();

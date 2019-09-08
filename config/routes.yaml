@@ -1,3 +1,40 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+#fos_user:
+ #   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_user_security_login:
+    #resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    path: /{_locale}/login
+    controller: fos_user.security.controller:loginAction
+    methods: ['GET', 'POST']
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /{_locale}/profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /{_locale}/register
+#
+#fos_user_resetting:
+#    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+#    prefix: /{_locale}/resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /{_locale}/profile
+
+fos_user_security_logout:
+    #resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    path: /logout
+    controller: fos_user.security.controller:logoutAction
+    methods: [ 'GET', 'POST' ]
+
+fos_user_security_check:
+    #resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    path: /login_check
+    controller: fos_user.security.controller:checkAction
+    methods:  ['POST']

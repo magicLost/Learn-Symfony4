@@ -22,15 +22,16 @@ class AppFixtures extends Fixture
         $loader = new NativeLoader();
 
         $objectSet = $loader->loadFile(
-            __DIR__ . '/fixtures.yaml'
+            __DIR__ . '/ORM_test/score_fixtures.yml'
         );
 
         //dump($objectSet->getObjects());
 
         foreach ($objectSet->getObjects() as $score) {
             $manager->persist($score);
-            $manager->flush();
         }
+
+        $manager->flush();
 
     }
 

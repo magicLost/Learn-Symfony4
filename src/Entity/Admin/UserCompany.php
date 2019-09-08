@@ -3,10 +3,16 @@
 namespace App\Entity\Admin;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\Admin\UserCompanyRepository")
  * @ORM\Table(name="user_company")
+ * @UniqueEntity(
+ *     fields={"user", "company"},
+ *     message="This user is already working in this company...",
+ *     errorPath="company"
+ * )
  */
 class UserCompany
 {
@@ -93,4 +99,6 @@ class UserCompany
 
 
 }
+
+
 
